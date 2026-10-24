@@ -1,0 +1,59 @@
+{
+  "enabledPlugins": {
+    "telegram@claude-plugins-official": false
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "failIfUnavailable": true,
+    "excludedCommands": [
+      "bin/learn.sh *",
+      "./bin/learn.sh *",
+      "bin/promote-skill.sh *",
+      "./bin/promote-skill.sh *"
+    ],
+    "filesystem": {
+      "denyRead": [
+        "~/.ssh",
+        "~/.aws",
+        "~/.gnupg",
+        "~/.config/gh",
+        "~/.claude/channels",
+        "~/.claude/.credentials.json",
+        "~/.codex",
+        "~/Library/Keychains",
+        "~/**/.env"
+      ]
+    },
+    "credentials": {
+      "envVars": [
+        {
+          "name": "ANTHROPIC_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "CLAUDE_CODE_OAUTH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "TELEGRAM_BOT_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "META_ACCESS_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "META_APP_SECRET",
+          "mode": "deny"
+        }
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "wttr.in"
+      ],
+      "strictAllowlist": true
+    }
+  }
+}

@@ -1,0 +1,48 @@
+# secrets
+.env
+.env.*
+*.env
+!.env.example
+!panel/.env.example
+auth.json
+credentials*
+*.pem
+CLAUDE.local.md
+# architect state, logs, outbox
+.jarvis/
+logs/
+outbox/
+node_modules/
+.*.tmp
+*.tmp
+# autonomy
+STOP
+STOP_ALL
+STOP_AUTOPILOT
+JARVIS_PAUSED
+drafts/
+.TASKS.md.*
+drafts/.apply.*
+tasks/.apply.*
+logs/.tasks.lock
+# learning
+memory/corrections.jsonl
+memory/.corrections.lock
+# media
+media-tmp/
+models/
+*.oga
+*.ogg
+*.opus
+*.m4a
+*.mp3
+*.wav
+*.aiff
+*.mp4
+*.mov
+*.webm
+# business data (third-party names, sales): stays on this Mac
+data/meta/*
+!data/meta/.gitkeep
+data/ventas.csv
+data/presupuesto.json

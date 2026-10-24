@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "sonnet",
+  "autoMemoryEnabled": false,
+  "enabledPlugins": {
+    "telegram@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Edit(./MEMORY.md)",
+      "Edit(./memory/**)",
+      "Write(./memory/**)",
+      "Edit(./LESSONS.md)",
+      "Edit(./proposals/**)",
+      "Write(./proposals/**)",
+      "Edit(./TASKS.md)",
+      "Edit(./tasks/**)",
+      "Write(./tasks/**)",
+      "Write(./STOP_AUTOPILOT)",
+      "Edit(./drafts/**)",
+      "Write(./drafts/**)",
+      "Edit(./data/ventas.csv)",
+      "Edit(./data/sector.md)",
+      "Write(./data/meta/refresh.request)",
+      "Bash(./bin/learn.sh *)",
+      "Bash(./bin/promote-skill.sh *)",
+      "Bash(bin/learn.sh *)",
+      "Bash(bin/promote-skill.sh *)",
+      "Bash(bash .claude/skills/transcribe/scripts/transcribe.sh:*)",
+      "Bash(python3 -I .claude/skills/watch-video/scripts/watch.py:*)",
+      "WebSearch",
+      "mcp__plugin_telegram_telegram__reply",
+      "mcp__plugin_telegram_telegram__react",
+      "mcp__plugin_telegram_telegram__download_attachment"
+    ],
+    "ask": [
+      "Edit(./SOUL.md)",
+      "Edit(./AGENTS.md)",
+      "Edit(./TOOLS.md)",
+      "Edit(./USER.md)",
+      "Edit(./HEARTBEAT.md)",
+      "Edit(./.claude/**)",
+      "Edit(./.mcp.json)",
+      "Edit(./data/presupuesto.json)",
+      "Bash(git push *)",
+      "Bash(rm *)",
+      "Bash(curl *)",
+      "WebFetch",
+      "mcp__plugin_telegram_telegram__edit_message"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(./.env.*)",
+      "Read(~/.claude/channels/**/.env)",
+      "Read(./jobs/.env.jobs)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.codex/auth.json)",
+      "Bash(sudo *)",
+      "Bash(curl * | sh*)",
+      "Bash(curl * | bash*)",
+      "Bash(wget * | sh*)",
+      "Bash(claude setup-token*)",
+      "Bash(security find-generic-password*)",
+      "Bash(python3 bin/meta-sync.py*)",
+      "Bash(python3 -I bin/meta-sync.py*)",
+      "Bash(bin/meta-sync.py*)",
+      "Bash(./bin/meta-sync.py*)",
+      "Edit(~/.claude/channels/**)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/bin/hooks/capture-correction.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash|Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/bin/hooks/protect-paths.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/audit.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/bin/hooks/learn-nudge.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
